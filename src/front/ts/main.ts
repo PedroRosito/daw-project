@@ -5,14 +5,21 @@
  * Project: DAW - CEIoT - Project Structure
  * Brief: Main frontend file (where the logic is)
 =============================================================================*/
-class MyFramework {
-    getElementById(id:string):HTMLElement{
-        return document.getElementById(id);
-    }
+//Ejercicio 9
+interface DeviceInt{
+    id:string;
+    name:string;
+    description:string;
+    state:number;
+    type:number;
 }
 
 
-class Main {
+class Main implements EventListenerObject , GETResponseListener, POSTResponseListener{
+    framework:MyFramework = new MyFramework();
+    view:ViewMainPage;
+    vConfig:ViewConfigPage;
+    counter:number = 0;
     main():void{
 
         console.log("soy un mensaje");
@@ -30,11 +37,21 @@ class Main {
         //Ejercicio 4
         this.mostrarUsers(users);
 
-        let framework = new MyFramework();
-        let boton = framework.getElementById("boton");
-        boton.textContent = "Negar";
-        //Ejercicio 5
-        boton.addEventListener("click", this.evento);
+        let boton:HTMLElement = this.framework.getElementById("boton");
+        boton.textContent = "Boton";
+        boton.addEventListener("click",this);
+
+        this.framework.requestGET("/devices/",this);
+
+        this.view = new ViewMainPage(this.framework);
+
+        //Trabajo final
+        this.vConfig = new ViewConfigPage(this.framework);
+        let configclick:HTMLElement = this.framework.getElementById("configbutton");
+        configclick.addEventListener("click",this);
+        let devclick:HTMLElement = this.framework.getElementById("dispbutton");
+        devclick.addEventListener("click",this);
+
     }
     //Ejercicio 4
     mostrarUsers(usuarios:Array<User>):void{
@@ -43,58 +60,89 @@ class Main {
             usuarios[i].printinfo();
         }
     }
-    //Ejercicio 5
-    evento (ev:Event):void{
-        console.log("se hizo click");
-        console.log(this);
-    }
-}
 
-//Ejercicio 3
-class User {
-    private _id:number;
-    private _name:string;
-    private _email:string;
-    private _isLogged:boolean;
+    //Ejercicio 6 y 7
+    handleEvent(evt : Event):void{
+        console.log(`se hizo "${evt.type}"`);
 
-    constructor(id:number, name:string, email:string) {
-        this._id = id;
-        this._name = name;
-        this._email = email;
-    }
-
-    set id(id:number)
+        
+        let b:HTMLElement = this.framework.getElementByEvent(evt);
+        console.log(b);
+        //Trabajo final
+        if(b.id == "configbutton")
         {
-            this._id = id;
+            console.log("Se clickeo configuración.")
+            this.vConfig.showConfiguration();
+            let sdbutton = this.framework.getElementById("sdbutton");
+            sdbutton.addEventListener("click",this);
+            let addbutton = this.framework.getElementById("addbutton");
+            addbutton.addEventListener("click",this);
+            let removebutton = this.framework.getElementById("removebutton");
+            removebutton.addEventListener("click",this);
         }
-    get id():number
-    {
-        return this._id;
-    }
-    set name(name:string)
-    {
-        this._name = name;
-    }
-    get name():string
-    {
-        return this._name;
-    }
-    set email(email:string)
-    {
-        this._email = email;
-    }
-    get email():string
-    {
-        return this._email;
+        else if(b.id == "sdbutton")
+        {
+            let data = {"apagar": 1};
+            this.framework.requestPOST("/apagar/",data,this);
+        }
+        else if(b.id == "addbutton")
+        {
+            this.vConfig.showAddForm();
+        }
+        else if(b.id == "removebutton")
+        {
+            this.vConfig.showRmForm();
+        }
+        else if(b.id == "dispbutton")
+        {
+            this.framework.requestGET("/devices/",this);
+        }
+        //
+        else if(b.id == "boton")
+        {
+            this.counter++;
+            b.textContent = `Click ${this.counter}`;
+        }
+        else
+        {
+            let state: boolean = this.view.getSwitchStateById(b.id);
+            let stateP = state==true ? 1 : 0; 
+            let idToInt = b.id.slice(4);
+            let data = {"id": `${parseInt(idToInt)}`, "state":stateP};
+            this.framework.requestPOST("/modstate/", data, this);
+        }
+        
+        
     }
 
-    printinfo():void
-    {
-        console.log("id = " + this._id + ", name = " + this._name + ", email = " + this._email);
+    //Ejercicio 8
+    handleGETResponse(status:number, response: string):void{
+        console.log("Respuesta: " + response);
+
+        let data:DeviceInt[] = JSON.parse(response);
+        console.log(data);
+
+        this.view.showDevices(data);
+
+        for(let d of data)
+        {
+           let b:HTMLElement = this.framework.getElementById(`dev_${d.id}`);
+           b.addEventListener("click",this);
+        }
     }
 
+    //Ejercicio 12
 
+    handlePOSTResponse(status:number, response: string):void{
+       // console.log(status);
+        console.log("Respuesta POST " + response);
+       //let dataPost:DeviceInt[] = JSON.parse(response);
+       
+    }
+    
+    
 }
+
 
 window.onload = function(){
     let n:Main = new Main();

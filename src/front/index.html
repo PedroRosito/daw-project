@@ -9,29 +9,94 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-		<!-- Navigation bar -->
-        <nav style="background-color:#124580">
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo left" style="margin-left: 15px;">Smart Home</a>
-                <ul id="nav-mobile" class="right" style="margin-right: 15px;">
-                    <li class="active"><a href="#">Devices</a></li>
-                    <li><a href="#">Help</a></li>
-                </ul>
-            </div>
-        </nav>	
-		<!-- Page Body -->
+	<!-- Navigation bar -->
+    <nav style="background-color:#124580">
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo left" style="margin-left: 15px;">Smart Home</a>
+            <ul id="nav-mobile" class="right" style="margin-right: 15px;">
+                <li class="active">
+                    <a href="#boton-prueba">Boton de prueba</a>
+                </li>
+                <li class="active">
+                    <a href="" id="dispbutton">Dispositivos</a>
+                </li>
+                <li>
+                    <a href="#" id="configbutton">Configuración</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="pagebody">
+        <!-- Page Body -->
 		<div class="container">
-			<br/>
-            <h3>Smart Home Web Client!</h3>
-			<br/>
-			<div class="row">
-                <div class="input-field col l10 m12 s12">
-                    <textarea id="textarea_1" class="materialize-textarea" style="height: 450px;" readonly></textarea>
-                    <button id="boton">Aceptar</button>
-                    <label for="textarea_1"></label>
-                </div>
-            </div>
-		</div>	
+            <a id="boton-prueba"></a>
+            <h4>Boton de prueba</h4>
+            <a id="boton" class="waves-effect waves-light btn">button</a>
+        </div>
+        
+       <!-- <div class="container">
+            <form action="/" method="POST">
+                <ul>
+                    <li>
+                        <label for="name">id:</label>
+                        <input type="number" id="postid" name="element_id">
+                      </li>
+                      <li>
+                        <label for="mail">estado:</label>
+                        <input type="number" id="estado" name="element_state">
+                      </li>
+                      <li class="button" id=enviar>
+                        <button type="submit">Enviar</button>
+                      </li>
+                </ul>
+            </form>
+        </div> -->
+        
+        <br/>
+		<div class="container">
+            <a id="dispositivos"></a>
+            <h4>Dispositivos</h4>
+            <ul class="collection", id="deviceList">
+            <!-- Agregar dispositivos -->
+            <!--
+            <li class="collection-item avatar">
+                <img src="static/images/lightbulb.png" alt="" class="circle">
+                <span class="title">Title</span>
+                <p>First Line </p>
+                <a href="#!" class="secondary-content">
+                    <div class="switch">
+                        <label>
+                          Off
+                          <input type="checkbox">
+                          <span class="lever"></span>
+                          On
+                        </label>
+                      </div>
+                </a>
+              </li>
+
+              <li class="collection-item avatar">
+                <img src="static/images/window.png" alt="" class="circle">
+                <span class="title">Title</span>
+                <p>First Line </p>
+                <a href="#!" class="secondary-content">
+                    <div class="switch">
+                        <label>
+                          Off
+                          <input type="checkbox">
+                          <span class="lever"></span>
+                          On
+                        </label>
+                      </div>
+                </a>
+              </li>
+            -->
+            <br/>
+            <br/>
+            </ul>
+
+        </div>
+    </div>    
 		<!-- Page Footer -->
         <footer class="page-footer" style="background-color:#124580">
             <div class="container">
@@ -53,6 +118,10 @@
         </footer>
 		<!--JavaScript at end of body for optimized loading-->
 		<script type="text/javascript" src="static/js/materialize.min.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/user.js"></script>
+        <script type="text/javascript" src="js/MyFramework.js"></script>
+        <script type="text/javascript" src="js/ViewMainPage.js"></script>
+        <script type="text/javascript" src="js/ViewConfigPage.js"></script>
     </body>
   </html>

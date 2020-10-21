@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 // to serve static files
 app.use(express.static('/home/node/app/static/'));
-// for parsing application/xwww-
+// for parsing application/xwww-urlencoded
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 
@@ -49,14 +49,19 @@ app.post('/apagar/', function(req,res){
     });
 });
 
-app.post('/addform/', function(req,res){
-   mysql.query('SELECT MAX(id) FROM Devices',function(err,response){
+app.post('/rmform/',function(req,res){
+    mysql.query('DELETE FROM Devices WHERE name=? AND description=?',[req.body.rmform_name,req.body.rmform_des],function(err,response){
         if(err){
             res.send(err).status(400);
             return;
         }
-   });
-   mysql.query(`INSERT INTO Devices (id, name, description, state, type) VALUES ('${maxid}','${req.body.addform_name}','${req.body.addform_des}','${req.body.addform_state}','${req.body.addform_type}')`,function(err, response){
+        res.redirect("http://localhost:8000");
+    });
+})
+
+
+app.post('/addform/',function(req,res){
+    mysql.query(`INSERT INTO Devices (name, description, state, type) VALUES ('${req.body.addform_name}','${req.body.addform_des}','${req.body.addform_state}','${req.body.addform_type}')`,function(err, response){
        if(err){
            res.send(err).status(400);
            return;

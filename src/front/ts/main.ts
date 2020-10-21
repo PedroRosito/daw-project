@@ -37,9 +37,9 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
         //Ejercicio 4
         this.mostrarUsers(users);
 
-        let boton:HTMLElement = this.framework.getElementById("boton");
+       /* let boton:HTMLElement = this.framework.getElementById("boton");
         boton.textContent = "Boton";
-        boton.addEventListener("click",this);
+        boton.addEventListener("click",this);*/
 
         this.framework.requestGET("/devices/",this);
 
@@ -98,11 +98,11 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
             this.framework.requestGET("/devices/",this);
         }
         //
-        else if(b.id == "boton")
+       /* else if(b.id == "boton")
         {
             this.counter++;
             b.textContent = `Click ${this.counter}`;
-        }
+        }*/
         else
         {
             let state: boolean = this.view.getSwitchStateById(b.id);

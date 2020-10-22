@@ -1,0 +1,3 @@
+[submodule "daw-project-template.wiki"]
+	path = daw-project-template.wiki
+	url = https://github.com/ce-iot/daw-project-template.wiki

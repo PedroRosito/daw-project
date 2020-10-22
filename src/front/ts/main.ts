@@ -16,6 +16,7 @@ interface DeviceInt{
 
 //global var
 var geturl:string;
+var posturl:string;
 
 class Main implements EventListenerObject , GETResponseListener, POSTResponseListener{
     framework:MyFramework = new MyFramework();
@@ -117,8 +118,9 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
         }
         else
         {
+            posturl = "/rmform/";
             let data = {"rmform_id": `${parseInt(b.id)}`};
-            this.framework.requestPOST("/rmform/",data,this);
+            this.framework.requestPOST(posturl,data,this);
         }
         
     }
@@ -156,6 +158,9 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
 
     handlePOSTResponse(status:number, response: string):void{
        // console.log(status);
+       if(posturl == "/rmform/"){
+           location.reload();
+       }
         console.log("Respuesta POST " + response);
        //let dataPost:DeviceInt[] = JSON.parse(response);
        

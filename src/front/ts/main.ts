@@ -14,6 +14,8 @@ interface DeviceInt{
     type:number;
 }
 
+//global var
+var geturl:string;
 
 class Main implements EventListenerObject , GETResponseListener, POSTResponseListener{
     framework:MyFramework = new MyFramework();
@@ -82,7 +84,7 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
         }
         else if(b.id == "sdbutton")
         {
-            let data = {"apagar": 1};
+            let data = {};
             this.framework.requestPOST("/apagar/",data,this);
         }
         else if(b.id == "addbutton")
@@ -91,7 +93,9 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
         }
         else if(b.id == "removebutton")
         {
-            this.vConfig.showRmForm();
+            geturl = "/devices/";
+            this.framework.requestGET(geturl,this);
+            //this.vConfig.showRmForm();
         }
         else if(b.id == "dispbutton")
         {
@@ -103,7 +107,7 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
             this.counter++;
             b.textContent = `Click ${this.counter}`;
         }*/
-        else
+        else if(b.id.includes("dev"))
         {
             let state: boolean = this.view.getSwitchStateById(b.id);
             let stateP = state==true ? 1 : 0; 
@@ -111,23 +115,40 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
             let data = {"id": `${parseInt(idToInt)}`, "state":stateP};
             this.framework.requestPOST("/modstate/", data, this);
         }
-        
+        else
+        {
+            let data = {"rmform_id": `${parseInt(b.id)}`};
+            this.framework.requestPOST("/rmform/",data,this);
+        }
         
     }
 
+
     //Ejercicio 8
     handleGETResponse(status:number, response: string):void{
-        console.log("Respuesta: " + response);
+        if(geturl == "/devices/"){
+            console.log("Respuesta: " + response);
+            let data:DeviceInt[] = JSON.parse(response);
+            this.vConfig.showRmForm(data);
+            for(let dev of data)
+            {
+                let disp:HTMLElement = this.framework.getElementById(dev.id);
+                disp.addEventListener("click",this);
+            }
+        }
+        else{
+            console.log("Respuesta: " + response);
 
-        let data:DeviceInt[] = JSON.parse(response);
-        console.log(data);
-
-        this.view.showDevices(data);
-
-        for(let d of data)
-        {
-           let b:HTMLElement = this.framework.getElementById(`dev_${d.id}`);
-           b.addEventListener("click",this);
+            let data:DeviceInt[] = JSON.parse(response);
+            console.log(data);
+    
+            this.view.showDevices(data);
+    
+            for(let d of data)
+            {
+               let b:HTMLElement = this.framework.getElementById(`dev_${d.id}`);
+               b.addEventListener("click",this);
+            }
         }
     }
 

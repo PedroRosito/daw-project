@@ -84,7 +84,7 @@ class ViewConfigPage{
 
     }
 
-    showRmForm():void{
+    /*showRmForm():void{
         let body:HTMLElement = this.framework.getElementById("pagebody");
         body.innerHTML =`
         <div class="container">
@@ -111,7 +111,33 @@ class ViewConfigPage{
                 </form>
             </div>
         </div> `;
-    }
-
-
+     }*/
+   
+        showRmForm(list:DeviceInt[]):void{
+            let d: HTMLElement = this.framework.getElementById("pagebody");
+            d.innerHTML = `        <br/>
+                                   <div class="container">
+                                        <a id="dispositivos"></a>
+                                        <h4>Dispositivos</h4>
+                                        <p>Seleccione el dispositivo que desea eliminar</p>
+                                        <ul class="collection", id="deviceList">
+                                        <br/>
+                                        <br/>
+                                        </ul>
+                                    </div>`;
+            let insertlist: HTMLElement = this.framework.getElementById("deviceList");
+            let imageURL: string;
+            
+            for (let dev of list) {
+                imageURL = dev.type == 0 ? "static/images/lightbulb.png" : "static/images/window.png";
+                insertlist.innerHTML += `<li class="collection-item avatar">
+                                    <img src=${imageURL} alt="" class="circle">
+                                    <span class="title">${dev.name}</span>
+                                    <p>${dev.description}</p>
+                                    <div class="secondary-content">
+                                        <a class="btn-floating btn-small waves-effect waves-light red" ><i class="material-icons" id="${dev.id}">clear</i></a>
+                                    </div>
+                                </li>`;
+            }
+        }
 }

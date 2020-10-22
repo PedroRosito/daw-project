@@ -49,13 +49,14 @@ app.post('/apagar/', function(req,res){
     });
 });
 
+
 app.post('/rmform/',function(req,res){
-    mysql.query('DELETE FROM Devices WHERE name=? AND description=?',[req.body.rmform_name,req.body.rmform_des],function(err,response){
+    mysql.query('DELETE FROM Devices WHERE id=?',[req.body.rmform_id],function(err,response){
         if(err){
             res.send(err).status(400);
             return;
         }
-        res.redirect("http://localhost:8000");
+        res.redirect("/");
     });
 })
 
@@ -82,6 +83,7 @@ app.get('/devices/', function(req, res, next) {
         res.send(response);
     });
 });
+
 
 
 

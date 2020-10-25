@@ -40,10 +40,6 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
         //Ejercicio 4
         this.mostrarUsers(users);
 
-       /* let boton:HTMLElement = this.framework.getElementById("boton");
-        boton.textContent = "Boton";
-        boton.addEventListener("click",this);*/
-
         this.framework.requestGET("/devices/",this);
 
         this.view = new ViewMainPage(this.framework);
@@ -102,12 +98,6 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
         {
             this.framework.requestGET("/devices/",this);
         }
-        //
-       /* else if(b.id == "boton")
-        {
-            this.counter++;
-            b.textContent = `Click ${this.counter}`;
-        }*/
         else if(b.id.includes("dev"))
         {
             let state: boolean = this.view.getSwitchStateById(b.id);
@@ -164,13 +154,10 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
     //Ejercicio 12
 
     handlePOSTResponse(status:number, response: string):void{
-       // console.log(status);
        if(posturl == "/rmform/"){
            location.reload();
        }
         console.log("Respuesta POST " + response);
-       //let dataPost:DeviceInt[] = JSON.parse(response);
-       
     }
     
     

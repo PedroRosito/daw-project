@@ -26,10 +26,9 @@ app.use(express.static('/home/node/app/static/'));
 // for parsing application/xwww-urlencoded
 app.use(bodyParser.urlencoded({ extended: true })); 
 
-
-
 //=======[ Main module code ]==================================================
 
+//POST methods
 app.post('/modstate/', function(req,res){
     mysql.query('UPDATE Devices SET state=? WHERE id=?',[req.body.state,req.body.id],function(err, response){
         if(err){
@@ -82,9 +81,9 @@ app.post('/addform/',function(req,res){
 
 });
 
+//GET methods
+
 app.get('/devices/', function(req, res, next) {
-    //response = "{ 'key1':'value1' }"
-    //res.send(JSON.stringify(datos)).status(200);
     mysql.query('SELECT * FROM Devices',function(err, response){
         if(err){
             res.send(err).status(400);
@@ -106,6 +105,8 @@ app.get('/devices/:id', function(req,res,next){
         res.send(response);
     });
 });
+
+//Listener
 
 app.listen(PORT, function(req, res) {
     console.log("NodeJS API running correctly");

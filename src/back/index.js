@@ -49,6 +49,16 @@ app.post('/apagar/', function(req,res){
     });
 });
 
+app.post('/modform/',function(req,res){
+    mysql.query('UPDATE Devices SET name=?,description=?,type=? WHERE id=?',[req.body.modform_name,req.body.modform_des,req.body.modform_type,req.body.modform_id],function(err, response){
+        if(err){
+            res.send(err).status(400);
+            return;
+        }
+    res.redirect("/");
+    });    
+})
+
 
 app.post('/rmform/',function(req,res){
     mysql.query('DELETE FROM Devices WHERE id=?',[req.body.rmform_id],function(err,response){

@@ -83,35 +83,6 @@ class ViewConfigPage{
         
 
     }
-
-    /*showRmForm():void{
-        let body:HTMLElement = this.framework.getElementById("pagebody");
-        body.innerHTML =`
-        <div class="container">
-            <h4>Datos del dispositivo</h4>
-            <div class="row">
-                <form class="col s12" action="/rmform/" method="post">
-                    <div class="row">
-                        <div class="row">
-                            <div class="input-field col s4">
-                                <input name="rmform_name" type="text" class="validate" required minlength="3" maxlength="15">
-                                <label for="device_name">Nombre del dispositivo</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s4">
-                                <input name="rmform_des" type="text" class="validate" required minlength="6" maxlength="20">
-                                <label for="device_description">Descripción del dispositivo</label>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-bottom:15px;">Eliminar
-                    <i class="material-icons right">close</i>
-                    </button>
-                </form>
-            </div>
-        </div> `;
-     }*/
    
         showRmForm(list:DeviceInt[]):void{
             let d: HTMLElement = this.framework.getElementById("pagebody");

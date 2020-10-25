@@ -112,9 +112,14 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
         {
             let state: boolean = this.view.getSwitchStateById(b.id);
             let stateP = state==true ? 1 : 0; 
-            let idToInt = b.id.slice(4);
-            let data = {"id": `${parseInt(idToInt)}`, "state":stateP};
+            let idtoint = b.id.slice(4);
+            let data = {"id": `${parseInt(idtoint)}`, "state":stateP};
             this.framework.requestPOST("/modstate/", data, this);
+        }
+        else if(b.id.includes("modb"))
+        {
+            let modbtoint = b.id.slice(5);
+            this.view.showModForm(parseInt(modbtoint));
         }
         else
         {
@@ -149,7 +154,9 @@ class Main implements EventListenerObject , GETResponseListener, POSTResponseLis
             for(let d of data)
             {
                let b:HTMLElement = this.framework.getElementById(`dev_${d.id}`);
+               let modb:HTMLElement = this.framework.getElementById(`modb_${d.id}`);
                b.addEventListener("click",this);
+               modb.addEventListener("click",this);
             }
         }
     }

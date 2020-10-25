@@ -27,8 +27,45 @@ class ViewMainPage {
                                         </label>
                                     </div>
                                 </a>
+                                <a class="waves-effect waves-light btn-small" id="modb_${dev.id}">Modificar</a>
                             </li>`;
         }
+    }
+
+    showModForm(id: number):void{
+        let body:HTMLElement = this.myf.getElementById("pagebody");
+        body.innerHTML =`
+        <div class="container">
+            <h4>Datos del dispositivo</h4>
+            <div class="row">
+                <form class="col s12" action="/modform/" method="post">
+                    <div class="row">
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <input name="modform_name" id="modform_name" type="text" class="validate" required minlength="3" maxlength="15">
+                                <label for="device_name">Nombre del dispositivo</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <input name="modform_des" id="modform_des" type="text" class="validate" required minlength="6" maxlength="20">
+                                <label for="device_description">Descripción del dispositivo</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <input name="modform_type" id="modform_type" type="number" class="validate" required min="0" max="1">
+                                <label for="device_type">Tipo</label>
+                                <p>Colocar 0 para lámpara o 1 para cortina</p>
+                            </div>
+                        </div>
+                    </div>
+                    <input name="modform_id" id="modform_id" type="hidden" value="${id}">
+                    <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-bottom:15px;">Enviar cambios
+                    </button>
+                </form>
+            </div>
+        </div>`;
     }
 
     getSwitchStateById(id: string): boolean {
